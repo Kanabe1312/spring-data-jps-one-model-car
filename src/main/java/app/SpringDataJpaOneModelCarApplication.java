@@ -2,10 +2,12 @@ package app;
 
 import app.car.Car;
 import app.repository.CarRepository;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.sql.SQLOutput;
 import java.util.List;
@@ -28,6 +30,7 @@ public class SpringDataJpaOneModelCarApplication  implements CommandLineRunner {
         carRepository.findAll().stream().forEach(System.out::println);
         populeaza();
         citeste();
+        valideaza();
     }
 
     public void populeaza(){
@@ -68,5 +71,26 @@ public class SpringDataJpaOneModelCarApplication  implements CommandLineRunner {
         if(inexistent.isEmpty()){
             System.out.println("Masina inexistenta");
         }
+    }
+
+    private void valideaza() {
+        Car gresit = new Car(" ", " ", 1800, "", -100);
+        try {
+            carRepository.saveAndFlush(gresit);
+        } catch (ConstraintViolationException e) {
+            e.getConstraintViolations().stream()
+                    .map(violation -> violation.getMessage()).sorted()
+                    .forEach(System.out::println);
+        }
+
+        Car duplicat = new Car("Audi", "A7", 2005, "Black", 15000);
+
+        try {
+            carRepository.saveAndFlush(duplicat);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Car already used: Audi A7");
+
+        }
+        System.out.println("Masini: " + carRepository.count());
     }
 }
