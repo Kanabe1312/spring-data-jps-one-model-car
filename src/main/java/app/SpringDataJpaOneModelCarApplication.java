@@ -93,4 +93,19 @@ public class SpringDataJpaOneModelCarApplication  implements CommandLineRunner {
         }
         System.out.println("Masini: " + carRepository.count());
     }
+
+
+    private void metodeDerivate() {
+
+        carRepository.findByBrand("Audi").ifPresent(car -> System.out.println(car.getBrand() + " " + car.getModel()));
+
+        System.out.println(carRepository.findByBrand("Bugatti").isPresent());
+
+        System.out.println(carRepository.existsByBrand("BMW"));
+
+        carRepository.findByColor("Black").forEach(car -> System.out.println(car.getBrand() + " " + car.getModel()));
+
+        System.out.println(carRepository.countByBrand("Audi"));
+    }
+
 }
