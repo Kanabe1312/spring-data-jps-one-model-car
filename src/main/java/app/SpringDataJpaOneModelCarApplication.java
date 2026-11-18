@@ -31,6 +31,8 @@ public class SpringDataJpaOneModelCarApplication  implements CommandLineRunner {
         populeaza();
         citeste();
         valideaza();
+        metodeDerivate();
+        metodeDerivateSingur();
     }
 
     public void populeaza(){
@@ -97,15 +99,40 @@ public class SpringDataJpaOneModelCarApplication  implements CommandLineRunner {
 
     private void metodeDerivate() {
 
-        carRepository.findByBrand("Audi").ifPresent(car -> System.out.println(car.getBrand() + " " + car.getModel()));
+        carRepository.findByBrand("Audi").forEach(car -> System.out.println(car.getBrand() + " " + car.getModel()));
 
-        System.out.println(carRepository.findByBrand("Bugatti").isPresent());
+        System.out.println(carRepository.findByBrand("Bugatti").isEmpty());
 
         System.out.println(carRepository.existsByBrand("BMW"));
 
         carRepository.findByColor("Black").forEach(car -> System.out.println(car.getBrand() + " " + car.getModel()));
 
         System.out.println(carRepository.countByBrand("Audi"));
+    }
+
+
+    private void metodeDerivateSingur(){
+        System.out.println("\n--- Brand Contains A ---");
+        carRepository.findByBrandContainingIgnoreCase("a").forEach(car -> System.out.println(car.getBrand()));
+
+        System.out.println("\n--- Price between 20000 and 50000 ---");
+        carRepository.findByPriceBetween(20000, 50000).forEach(car -> System.out.println(car.getBrand() + " " + car.getModel()));
+
+        System.out.println("\n--- Year less than 2020 ---");
+        carRepository.findByYearLessThan(2020).forEach(car -> System.out.println(car.getBrand() + " " + car.getYear()));
+
+        System.out.println("\n--- Price greater than or equal 50000 ---");
+        carRepository.findByPriceGreaterThanEqual(50000).forEach(car-> System.out.println(car.getBrand()));
+
+        System.out.println("\n--- Model contains A ---");
+        carRepository.findByModelContainingIgnoreCase("a").forEach(car-> System.out.println(car.getModel()));
+
+        System.out.println("\n--- Black or White cars ---");
+        carRepository.findByColorIn(List.of("Black","White")).forEach(car -> System.out.println(car.getBrand() +" "+ car.getColor()));
+
+        System.out.println("\n--- BMW and White ---");
+        carRepository.findByBrandAndColor("BMW","White").forEach(car -> System.out.println(car.getBrand() + " " + car.getColor()));
+
     }
 
 }
