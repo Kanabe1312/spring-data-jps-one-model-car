@@ -39,16 +39,16 @@ public class SpringDataJpaOneModelCarApplication  implements CommandLineRunner {
         carRepository.deleteAll();
 
         carRepository.saveAll(List.of(
-                new Car("Audi","A7",2005,"Black",15.000),
-                new Car("BMW","I8",2014,"White",25.000),
-                new Car("Mercedes", "C63", 2018, "Grey", 35.000),
-                new Car("Porsche", "911", 2020, "Red", 85.000),
-                new Car("Volkswagen", "Golf GTI", 2019, "Blue", 22.000),
-                new Car("Ferrari", "488", 2017, "Yellow", 120.000),
-                new Car("Lamborghini", "Huracan", 2021, "Green", 180.000),
-                new Car("Tesla", "Model S", 2022, "White", 75.000),
-                new Car("Toyota", "Supra", 2020, "Orange", 55.000),
-                new Car("Audi", "RS6", 2023, "Black", 95.000)
+                new Car("Audi","A7",2005,"Black",15000),
+                new Car("BMW","I8",2014,"White",25000),
+                new Car("Mercedes", "C63", 2018, "Grey", 35000),
+                new Car("Porsche", "911", 2020, "Red", 85000),
+                new Car("Volkswagen", "Golf GTI", 2019, "Blue", 22000),
+                new Car("Ferrari", "488", 2017, "Yellow", 120000),
+                new Car("Lamborghini", "Huracan", 2021, "Green", 180000),
+                new Car("Tesla", "Model S", 2022, "White", 75000),
+                new Car("Toyota", "Supra", 2020, "Orange", 55000),
+                new Car("Audi", "RS6", 2023, "Black", 95000)
         ));
 
         System.out.println("Masini: " + carRepository.count() );

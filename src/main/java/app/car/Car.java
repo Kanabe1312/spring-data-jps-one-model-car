@@ -14,7 +14,10 @@ import lombok.ToString;
 import java.util.UUID;
 
 @Entity
-@Table(name = "cars")
+@Table(
+        name = "cars"
+
+)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,10 +30,12 @@ public class Car {
 
     @NotBlank(message = "Brand is required")
     @Size(max = 100)
+    @Column(unique = true)
     private String brand;
 
     @NotBlank(message = "Model is reqired")
     @Size(max=100)
+    @Column(unique = true)
     private String model;
 
     @Min(value = 1985, message = "Year must be at lesat 1986")
