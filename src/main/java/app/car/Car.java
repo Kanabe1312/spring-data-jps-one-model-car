@@ -11,12 +11,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.util.UUID;
+
 
 @Entity
 @Table(
-        name = "cars"
-
+        name = "cars",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"brand", "model"})
+        }
 )
 @Getter
 @Setter
@@ -30,15 +34,15 @@ public class Car {
 
     @NotBlank(message = "Brand is required")
     @Size(max = 100)
-    @Column(unique = true)
+    @Column(nullable = false, length = 100)
     private String brand;
 
-    @NotBlank(message = "Model is reqired")
-    @Size(max=100)
-    @Column(unique = true)
+    @NotBlank(message = "Model is required")
+    @Size(max = 100)
+    @Column(nullable = false, length = 100)
     private String model;
 
-    @Min(value = 1985, message = "Year must be at lesat 1986")
+    @Min(value = 1985, message = "Year must be at least 1985")
     private int year;
 
     @NotBlank(message = "Color is required")
@@ -47,11 +51,17 @@ public class Car {
     @DecimalMin(value = "0.01", message = "Price must be at least 0.01")
     private double price;
 
-    public Car( String brand, String model, int year, String color, double price) {
+
+    private LocalDate registrationDate;
+
+    private boolean available;
+    public Car(String brand, String model, int year, String color, double price, LocalDate registrationDate, boolean available) {
         this.brand = brand;
         this.model = model;
         this.year = year;
         this.color = color;
         this.price = price;
+        this.registrationDate = registrationDate;
+        this.available = available;
     }
 }
